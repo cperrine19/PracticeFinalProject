@@ -110,6 +110,60 @@ CREATE TABLE IF NOT EXISTS `music_dept_performance_library`.`performances` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `music_dept_performance_library`.`composer_song_title`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `music_dept_performance_library`.`composer_song_title` ;
+
+CREATE TABLE IF NOT EXISTS `music_dept_performance_library`.`composer_song_title` (
+  `idsong_title` INT NOT NULL,
+  `idcomposer` INT NOT NULL,
+  INDEX `idsong_title_idx` (`idsong_title` ASC) VISIBLE,
+  INDEX `idcomposer_idx` (`idcomposer` ASC) VISIBLE,
+  PRIMARY KEY (`idsong_title`, `idcomposer`),
+  CONSTRAINT `idsong_title`
+    FOREIGN KEY (`idsong_title`)
+    REFERENCES `music_dept_performance_library`.`song_title` (`idsong_title`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idcomposer`
+    FOREIGN KEY (`idcomposer`)
+    REFERENCES `music_dept_performance_library`.`composer` (`idcomposer`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `music_dept_performance_library`.`song_title_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `music_dept_performance_library`.`song_title_type` ;
+
+CREATE TABLE IF NOT EXISTS `music_dept_performance_library`.`song_title_type` (
+  `idsong_title` INT NOT NULL,
+  `idsong_type` INT NOT NULL,
+  `idcomposer` INT NOT NULL,
+  PRIMARY KEY (`idsong_title`, `idcomposer`, `idsong_type`),
+  INDEX `idcomposer_idx` (`idcomposer` ASC) VISIBLE,
+  INDEX `idsong_type_idx` (`idsong_type` ASC) VISIBLE,
+  CONSTRAINT `idsong_title`
+    FOREIGN KEY (`idsong_title`)
+    REFERENCES `music_dept_performance_library`.`song_title` (`idsong_title`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idcomposer`
+    FOREIGN KEY (`idcomposer`)
+    REFERENCES `music_dept_performance_library`.`song_title` (`idsong_title`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idsong_type`
+    FOREIGN KEY (`idsong_type`)
+    REFERENCES `music_dept_performance_library`.`song_type` (`idsong_type`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
